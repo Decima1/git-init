@@ -1,0 +1,691 @@
+body
+{
+    min-width: 720px
+    max-width: 2560px;
+    margin: 0 auto;    
+    height: auto;
+    overflow: hidden;
+    background-attachment: fixed;
+}
+#layer-playchannel
+{
+    display: none;
+}
+
+#playchannel-num
+{
+    background-color: #000000;
+    color: #FFFFFF;
+    font-size: 152px;
+    height: 220px;
+    margin-left: 1610px;
+    margin-top: 5px;
+    padding-right: 5px;
+    text-align: center;
+    width: 205px;
+}
+
+#playchannel-num img
+{
+    width: 16px;
+    height: 16px;
+}
+
+
+#playchannel-connecting
+{
+    text-align: center;
+    color: #000000;
+    font-weight: bold;
+    font-size: 12px;
+    position: absolute;
+    height: 35px;
+    padding: 0px 5px;
+    background-image: url(images/chlist/chlist_category.jpg);
+    left: 42%;
+    top: 35%;
+}
+
+#playchannel-connecting img
+{
+    width: 20px;
+    height: 20px;
+
+}
+
+
+
+#playchannel-info
+{
+    margin: 459px 10px 0 0px;
+}
+
+#playchannel-info-wrapper
+{
+    color: #FFFFFF !important;
+    height: 210px;
+    overflow: hidden;
+    width: 100%;
+}
+
+#playchannel-info-name
+{
+    background-image: url(images/channel_info_background.jpg);
+   
+    font-size: 52px;
+    font-weight: normal;
+    text-align: center;
+    height: 50px;
+    display: table-cell;
+    vertical-align: middle;
+    width: 1920px;
+}
+
+
+#playchannel-info-programm
+{
+    /*padding: 5px 30px 5px 30px;*/
+/*    height: 75px;*/
+}
+
+#playchannel-info-programm table
+{
+    width: 100%;
+}
+
+#playchannel-info-programm tr
+{
+    height: 70px;
+}
+
+#playchannel-info-programm td
+{
+
+    width: 0%;
+
+}
+
+.announce-row
+{
+    background-image: url(images/channel_programm_background.png);
+}
+.selected-row
+{
+    background-image: url(images/select_line.jpg);
+    color: #FFFFFF;
+}
+
+#playchannel-info-category
+{
+    text-align: center;
+    background-color: #EEEEEE;
+}
+
+#playchannel-info-tips
+{
+    padding: 0 25px;
+    padding-top: 10px;
+    color: #FFFFFF;
+    margin: 1px auto 0 auto;
+    background-color: #000000;
+    height: 35px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    width: 400px;
+}
+
+#playchannel-info-clock
+{
+    color: #FFFFFF;
+    background-color: #000000;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+
+    margin-left: 580px;
+    margin-top: 2px;
+    padding-right: 5px;
+    width: 85px;
+    height: 35px;
+}
+
+#layer-channelmenu
+{
+    display: none;
+    width: 100%;
+    height: 98%;
+    background-image: url(images/chlist/chlist_background.png);
+    color: #FFFFFF;
+}
+
+#channelmenu-name
+{
+    background-image: url(images/channel_info_background.jpg);
+
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    height: 75px;
+    display: table-cell;
+    vertical-align: middle;
+    width: 720px;
+    color: #FFFFFF;
+}
+
+#channelmenu-list
+{
+    float: left;
+    padding-left: 5px;
+    overflow: hidden;
+    width: 355px;
+    height: 400px;
+}
+
+#channelmenu-list li
+{
+    list-style-type: none;
+    padding-left: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.channelmenu-list-fav
+{
+    width: 25px;
+    float: left;
+}
+
+.channelmenu-list-fav img
+{
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+}
+
+
+.channelmenu-list-num
+{
+    width: 35px;
+    float: left;
+    text-align: center;
+}
+
+#channelmenu-list ol
+{
+    padding: 0;
+}
+
+#channelmenu-pig
+{
+    /*background-color: #fff;*/
+    /*float: right;*/
+    
+    margin-left: 360px;
+    height: 270px;
+    width: 330px;
+}
+#channelmenu-connecting
+{
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    color: #000000;
+    position: absolute;
+    left: 450px;
+    top: 220px;
+    background-image: url(images/chlist/chlist_category.jpg);
+}
+
+.channelmenu-item
+{
+    font-size: 22px;
+    text-decoration: none;
+    overflow: hidden;
+    margin: 1px 0 1px 0;
+    background-image: url(images/channel_programm_background.png);
+}
+
+.channelmenu-item-usermenu
+{
+    font-size: 22px;
+    text-decoration: none;
+    overflow: hidden;
+    margin: 1px 0 1px 0;
+    background-image: url(images/channel_programm_background.png);
+    background-size: 100% 100%;
+}
+
+
+.channelmenu-selecteditem
+{
+    padding-left: 10px;
+    font-size: 22px;
+    text-decoration: none;
+    overflow: hidden;
+    margin: 1px 0 1px 0;
+    background-image: url(images/chlist/select_line.jpg);
+}
+
+.channelmenu-category
+{
+    background-image: url(images/chlist/chlist_category.jpg);
+    width: 100%;
+    padding-left: 35px;
+}
+
+#channelmenu-navarrow-up
+{
+    height: 2px;
+    text-align: center;
+}
+#channelmenu-navarrow-down
+{
+    height: 2px;
+    text-align: center;
+}
+
+#channelmenu-program
+{
+    background-image: url('images/chlist/chlist_program_bg.jpg');
+    background-repeat: repeat-x;
+    background-color: #000000;
+
+    margin-left: 360px;
+
+    /*float: right;*/
+    height: 100px;
+    width: 340px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 22px;
+    padding: 0 20px;
+}
+
+#channelmenu-clock
+{
+    color: #FFFFFF;
+    background-color: #000000;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+
+    margin-left: 580px;
+    margin-top: 2px;
+    width: 85px;
+    height: 35px;
+}
+
+#channelmenu-info-tips
+{
+    /*float: right;*/
+    margin-left: 360px;
+    padding: 0 25px 0 25px;
+    padding-top: 15px;
+    color: #AAAAAA;
+    background-color: #000000;
+    margin-top:13px;
+    width: 300px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#layer-channelannounce
+{
+    display: none;
+    padding: 0 0px 0px 0px;
+    background-image: url(images/wbg.jpg);
+    height: 460px;
+    margin: 0 25px 0 0px;
+}
+
+#channelannounce-list
+{
+    background-color: #FFFFFF;
+    height: 100%;
+    width: 100%;
+    padding-top: 10px;
+    overflow: hidden;
+}
+
+#channelannounce-name
+{
+    padding: 10px 0 10px 65px;
+    color:#FFFFFF;
+    font-size: 18px;
+    font-weight: bold;
+    height: 32px;
+}
+
+#channelannounce-table
+{
+    color:#FFFFFF;
+    font-size: 22px;
+}
+
+.channelannounce-desc
+{
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 18px;
+}
+
+.announce-desc
+{
+    padding: 10px 10px 10px 40px;
+    text-align: left;
+    background-image: url(images/channel_programm_background.png);
+}
+
+#layer-usermenu
+{
+    display: none;
+    width: 700px;
+    height: 98%;
+    color: #FFFFFF;
+}
+
+#usermenu-clock
+{
+    color: #FFFFFF;
+    background-color: #000000;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+
+    margin-left: 580px;
+    margin-top: 2px;
+    width: 85px;
+    height: 35px;
+}
+
+#usermenu-name
+{
+    padding: 10px 0 10px 65px;
+
+    font-size: 18px;
+    height: 35px;
+}
+
+
+#usermenu-menu
+{
+    height: 110px;
+    overflow: hidden;
+    text-align: center;
+    width: 700px;
+    
+}
+
+#usermenu-menu-wrapper
+{
+    background-image: url(images/channel_info_background.jpg);
+
+    font-weight: bold;
+    text-align: center;
+    height: 75px;
+
+    padding: 0 15%;
+}
+
+#usermenu-menu-wrapper img
+{
+    
+}
+
+#usermenu-category-name
+{
+    font-size: 26px;
+    background-image: url(images/channel_programm_background.png);
+}
+
+.usermenu-category
+{
+    float: left;
+    width: 75px;
+    height: 55px;
+    padding-top: 20px;
+}
+
+.usermenu-content
+{
+    
+}
+
+#usermenu-item-weather
+{
+
+}
+
+#usermenu-item-news
+{
+    text-align: justify;
+    width: 500px;
+    margin: 0 auto;
+    padding: 50px;
+    background-image: url(images/channel_programm_background.png);
+}
+
+#usermenu-item-help
+{
+    width: 500px;
+    margin: 0 auto;
+    padding: 5px;
+    background-image: url(images/channel_programm_background.png);
+}
+
+#usermenu-item-info
+{
+    width: 500px;
+    margin: 0 auto;
+    padding: 5px;
+    background-image: url(images/channel_programm_background.png);
+}
+
+.usermenu-item
+{
+    width: 100%;
+    padding: 5px;
+    overflow: hidden;
+    display: none;
+}
+
+.span-string
+{
+    background-color: #47a6ff;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+#volume-bar
+{
+    background-image: url(images/volume.gif);
+    background-repeat: no-repeat;
+    left: 33%;
+    position: absolute;
+    top: 75%;
+    width: 256px;
+    height: 64px;
+    display: none;
+}
+
+#volume-bar-num
+{
+    margin-left: 70px;
+    margin-top: 55px;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+#message-window
+{
+    position: absolute;
+    left: 180px;
+    top: 170px;
+    width: 360px;
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 5px;
+    display: none;
+}
+
+#message-header
+{
+    width: 100%;
+    height: 20px;
+    background-color: #0000DD;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+}
+#message-content
+{
+    min-height: 100%;
+}
+
+#message-OK
+{
+    text-align: center;
+    margin: 15px auto;
+    width: 100px;
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+#pin-window
+{
+    position: absolute;
+    left: 30%;
+    top: 40%;
+    width: 360px;
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 5px;
+    display: none;
+}
+
+#pin-header
+{
+    width: 100%;
+    height: 30px;
+    background-color: #5f71a7;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+#pin-content
+{
+    min-height: 100%;
+}
+
+#pin-OK
+{
+    text-align: center;
+    margin: 35px 0 10px 80px;
+    font-size: 22px;
+    width: 200px;
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+#pin-invalid{
+    position: absolute;
+    color: red;
+    font-size: 22px;
+    text-align: center;
+    width: 100%;
+}
+#pinin{
+    margin: 10px 15px 10px 130px;
+    width: 100px;
+    font-size: 22px;
+}
+
+
+
+#minimessage-window
+{
+    position: absolute;
+    top: 240px;
+    width: 700px;
+    font-weight: bold;
+}
+
+#minimessage-content
+{
+    text-align: center;
+    font-size: 22px;
+    color: #FFFFFF;
+    text-decoration: none;
+    background-image: url(images/chlist/select_line.jpg);
+}
+
+#error-window
+{
+    position: absolute;
+    left: 180px;
+    top: 170px;
+    width: 360px;
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 5px;
+    display: none;
+}
+
+#error-header
+{
+    width: 100%;
+    height: 20px;
+    background-color: #DD0000;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+}
+
+#error-OK
+{
+    text-align: center;
+    margin: 15px auto;
+    width: 200px;
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+.progfirstnext
+{
+    width: 150px;
+    padding-right: 10px;
+}
+
+.progtime
+{
+    width: 70px;
+}
+
+.programfont{
+    font-size: 22px;
+}
+
+.programtable{
+    margin-left: 5px;
+}
+
+.infotipsimg{
+    width: 24px;
+    height: 24px;
+}
+
+.itemdatefont{
+    font-size: 12px;
+}
+
+.itemuserinfofont{
+    font-size: 24px;
+}
+
+

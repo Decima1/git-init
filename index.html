@@ -1,0 +1,401 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head><script type="text/javascript">
+//<![CDATA[
+var ajax = [];var cache;function pjx(args,fname,method) { this.target=args[1]; this.args=args[0]; method=(method)?method:'GET'; if(method=='post'){method='POST';} this.method = method; this.r=ghr(); this.url = this.getURL(fname);}function formDump(){ var all = []; var fL = document.forms.length; for(var f = 0;f<fL;f++){ var els = document.forms[f].elements; for(var e in els){ var tmp = (els[e].id != undefined)? els[e].id : els[e].name; if(typeof tmp != 'string'){continue;} if(tmp){ all[all.length]=tmp} } } return all;}function getVal(id) { if (id.constructor == Function ) { return id(); } if (typeof(id)!= 'string') { return id; } var element = document.getElementById(id); if( !element ) { for( var i=0; i<document.forms.length; i++ ){ element = document.forms[i].elements[id]; if( element ) break; } if( element && !element.type ) element = element[0]; } if(!element){ alert('ERROR: Cant find HTML element with id or name: ' + id+'. Check that an element with name or id='+id+' exists'); return 0; } if(element.type == 'select-one') { if(element.selectedIndex == -1) return; var item = element[element.selectedIndex]; return item.value || item.text; } if(element.type == 'select-multiple') { var ans = []; var k =0; for (var i=0;i<element.length;i++) { if (element[i].selected || element[i].checked ) { ans[k++]= element[i].value || element[i].text; } } return ans; } if(element.type == 'radio' || element.type == 'checkbox'){ var ans =[]; var elms = document.getElementsByTagName('input'); var endk = elms.length ; var i =0; for(var k=0;k<endk;k++){ if(elms[k].type== element.type && elms[k].checked && (elms[k].id==id||elms[k].name==id)){ ans[i++]=elms[k].value; } } return ans; } if( element.value == undefined ){ return element.innerHTML; }else{ return element.value; }}function fnsplit(arg) { var url=""; if(arg=='NO_CACHE'){cache = 0; return "";}; if((typeof(arg)).toLowerCase() == 'object'){ for(var k in arg){ url += '&' + k + '=' + arg[k]; } }else if (arg.indexOf('__') != -1) { arga = arg.split(/__/); url += '&' + arga[0] +'='+ escape(arga[1]); } else { var res = getVal(arg) || ''; if(res.constructor != Array){ res = [res] } else if( res.length == 0 ) { res = [ '' ] } for(var i=0;i<res.length;i++) { url += '&args=' + escape(res[i]) + '&' + arg + '=' + escape(res[i]); } } return url;}pjx.prototype = { send2perl : function(){ var r = this.r; var dt = this.target; if (dt==undefined) { return true; } this.pjxInitialized(dt); var url=this.url; var postdata; if(this.method=="POST"){ var idx=url.indexOf('?'); postdata = url.substr(idx+1); url = url.substr(0,idx); } r.open(this.method,url,true); ; if(this.method=="POST"){ r.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); r.send(postdata); } if(this.method=="GET"){ r.send(null); } r.onreadystatechange = handleReturn; }, pjxInitialized : function(){}, pjxCompleted : function(){}, readyState4 : function(){ var rsp = unescape(this.r.responseText); /* the response from perl */ var splitval = '__pjx__'; /* to split text */ /* fix IE problems with undef values in an Array getting squashed*/ rsp = rsp.replace(splitval+splitval+'g',splitval+" "+splitval); var data = rsp.split(splitval); dt = this.target; if (dt.constructor != Array) { dt=[dt]; } if (data.constructor != Array) { data=[data]; } if (typeof(dt[0])!='function') { for ( var i=0; i<dt.length; i++ ) { var div = document.getElementById(dt[i]); if (div.type =='text' || div.type=='textarea' || div.type=='hidden' ) { div.value=data[i]; } else if (div.type =='checkbox') { div.checked=data[i]; } else { div.innerHTML = data[i]; } } } else if (typeof(dt[0])=='function') { dt[0].apply(this,data); } this.pjxCompleted(dt); }, getURL : function(fname) { var args = this.args; var url= 'fname=' + fname; for (var i=0;i<args.length;i++) { url=url + args[i]; } return url; }};handleReturn = function() { for( var k=0; k<ajax.length; k++ ) { if (ajax[k].r==null) { ajax.splice(k--,1); continue; } if ( ajax[k].r.readyState== 4) { ajax[k].readyState4(); ajax.splice(k--,1); continue; } }};var ghr=getghr();function getghr(){ if(typeof XMLHttpRequest != "undefined") { return function(){return new XMLHttpRequest();} } var msv= ["Msxml2.XMLHTTP.7.0", "Msxml2.XMLHTTP.6.0", "Msxml2.XMLHTTP.5.0", "Msxml2.XMLHTTP.4.0", "MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP", "Microsoft.XMLHTTP"]; for(var j=0;j<=msv.length;j++){ try { A = new ActiveXObject(msv[j]); if(A){ return function(){return new ActiveXObject(msv[j]);} } } catch(e) { } } return false;}function jsdebug(){ var tmp = document.getElementById('pjxdebugrequest').innerHTML = "<br><pre>"; for( var i=0; i < ajax.length; i++ ) { tmp += '<a href= '+ ajax[i].url +' target=_blank>' + decodeURI(ajax[i].url) + ' <' + '/a><br>'; } document.getElementById('pjxdebugrequest').innerHTML = tmp + "<" + "/pre>";}function MacAuthentication() { var args = MacAuthentication.arguments; cache = 1; for( var i=0; i<args[0].length;i++ ) { args[0][i] = fnsplit(args[0][i]); } var l = ajax.length; ajax[l]= new pjx(args,"MacAuthentication",args[2]); ajax[l].url = 'index.cgi?' + ajax[l].url; if ( cache == 0 ) { ajax[l].url = ajax[l].url + '&pjxrand=' + Math.random(); } ajax[l].send2perl(); ;}function getchannelprogram() { var args = getchannelprogram.arguments; cache = 1; for( var i=0; i<args[0].length;i++ ) { args[0][i] = fnsplit(args[0][i]); } var l = ajax.length; ajax[l]= new pjx(args,"getchannelprogram",args[2]); ajax[l].url = 'index.cgi?' + ajax[l].url; if ( cache == 0 ) { ajax[l].url = ajax[l].url + '&pjxrand=' + Math.random(); } ajax[l].send2perl(); ;}function generatecurrency() { var args = generatecurrency.arguments; cache = 1; for( var i=0; i<args[0].length;i++ ) { args[0][i] = fnsplit(args[0][i]); } var l = ajax.length; ajax[l]= new pjx(args,"generatecurrency",args[2]); ajax[l].url = 'index.cgi?' + ajax[l].url; if ( cache == 0 ) { ajax[l].url = ajax[l].url + '&pjxrand=' + Math.random(); } ajax[l].send2perl(); ;}function generateinfo() { var args = generateinfo.arguments; cache = 1; for( var i=0; i<args[0].length;i++ ) { args[0][i] = fnsplit(args[0][i]); } var l = ajax.length; ajax[l]= new pjx(args,"generateinfo",args[2]); ajax[l].url = 'index.cgi?' + ajax[l].url; if ( cache == 0 ) { ajax[l].url = ajax[l].url + '&pjxrand=' + Math.random(); } ajax[l].send2perl(); ;}function savefavchannels() { var args = savefavchannels.arguments; cache = 1; for( var i=0; i<args[0].length;i++ ) { args[0][i] = fnsplit(args[0][i]); } var l = ajax.length; ajax[l]= new pjx(args,"savefavchannels",args[2]); ajax[l].url = 'index.cgi?' + ajax[l].url; if ( cache == 0 ) { ajax[l].url = ajax[l].url + '&pjxrand=' + Math.random(); } ajax[l].send2perl(); ;}function generatenews() { var args = generatenews.arguments; cache = 1; for( var i=0; i<args[0].length;i++ ) { args[0][i] = fnsplit(args[0][i]); } var l = ajax.length; ajax[l]= new pjx(args,"generatenews",args[2]); ajax[l].url = 'index.cgi?' + ajax[l].url; if ( cache == 0 ) { ajax[l].url = ajax[l].url + '&pjxrand=' + Math.random(); } ajax[l].send2perl(); ;}function generateweather() { var args = generateweather.arguments; cache = 1; for( var i=0; i<args[0].length;i++ ) { args[0][i] = fnsplit(args[0][i]); } var l = ajax.length; ajax[l]= new pjx(args,"generateweather",args[2]); ajax[l].url = 'index.cgi?' + ajax[l].url; if ( cache == 0 ) { ajax[l].url = ajax[l].url + '&pjxrand=' + Math.random(); } ajax[l].send2perl(); ;}
+//]]>
+</script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Pragma" content="no-cache">
+    	   <meta http-equiv="Cache-control" content="no-cache">
+		<title>MaxnetPlayer</title>
+		
+		
+		    <script type="text/javascript" src="app/javascript/jquery1.6.2.js"></script>
+		   	<script type="text/javascript" src="app/javascript/StatFunctions.js"></script>
+    	    <script type="text/javascript" src="app/javascript/Services.js"></script>
+    	    <script type="text/javascript" src="app/javascript/jDev.js"></script>
+    	    <script type="text/javascript" src="app/javascript/jEngine.js"></script>
+    	    <script type="text/javascript" src="core/framework.js"></script>
+      	    <script type="text/javascript">
+        	$import('app/javascript/src/MessageBox.js');
+        </script>	
+
+		<!--0 TODO : Common API -->	 
+		<!--<script type="text/javascript" src="$MANAGER_WIDGET/Common/OpenSrc/jquery-1.4.2.min.js"></script> -->
+	 	<script type="text/javascript" src="$MANAGER_WIDGET/Common/af/2.0.0/loader.js"></script>
+		<script type='text/javascript' language='javascript' src='$MANAGER_WIDGET/Common/core.js'></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/webapi/1.0/deviceapis.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/webapi/1.0/webapis.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/Plugin/Define.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/Util/Include.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Plugin.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/IME/ime2.js"></script>
+		<script type='text/javascript' language='javascript' src="$MANAGER_WIDGET/Common/af/2.0.0/extlib/jquery.js"></script>
+		<script type='text/javascript' language='javascript' src="$MANAGER_WIDGET/Common/ui.js"></script>
+		<script type='text/javascript' language='javascript' src="$MANAGER_WIDGET/Common/jquery.js"></script>
+	
+		<!-- TODO : Javascript code -->
+		<!-- <script language="javascript" type="text/javascript" src="app/javascript/jEngine.js"></script> -->
+
+
+		<object id="pluginObjectTV" 		classid="clsid:SAMSUNG-INFOLINK-TV" 		class="sef-plugin"></object>
+		<object id="pluginObjectAudio" 		classid="clsid:SAMSUNG-INFOLINK-AUDIO" 		class="sef-plugin"></object>
+		<object id="pluginObjectPlayer" 	classid="clsid:SAMSUNG-INFOLINK-PLAYER"		class="sef-plugin"></object>
+		<object id="pluginObjectTVMW" 		classid="clsid:SAMSUNG-INFOLINK-TVMW"		class="sef-plugin"></object>
+		<object id="pluginObjectVideo" 		classid="clsid:SAMSUNG-INFOLINK-VIDEO"		class="sef-plugin"></object>
+		<object id="pluginObjectNNavi" 		classid="clsid:SAMSUNG-INFOLINK-NNAVI"		class="sef-plugin"></object>
+		<object id="pluginObjectAppCommon"	classid="clsid:SAMSUNG-INFOLINK-APPCOMMON"	class="sef-plugin"></object>
+		<object id="pluginObjectNetwork"	classid="clsid:SAMSUNG-INFOLINK-NETWORK"	class="sef-plugin"></object>
+		<object id="pluginObjectStorage"	classid="clsid:SAMSUNG-INFOLINK-STORAGE"	class="sef-plugin"></object>
+		  
+		<object id='pluginObjectSEF' border=0 classid='clsid:SAMSUNG-INFOLINK-SEF' ></object>
+        <object id="pluginTaskmgnt" border=0 classid="clsid:SAMSUNG-INFOLINK-TASKMANAGER"></object> 
+
+       	
+		<!-- TODO : Style sheets code -->
+		<link rel="stylesheet" href="app/stylesheets/main.css" type="text/css">
+
+		<!-- TODO: Plugins -->
+
+	</head>
+
+	<body onload="Main.onLoad();">
+
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/IME/ime2.js"></script>
+		<script type="text/javascript" src='$MANAGER_WIDGET/Common/IME_XT9/ime.js'></script>
+	
+		<!-- Dummy anchor as focus for key events -->
+
+
+		<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
+ 		<div id="webapiplayer"></div> 
+    	<!--<div id="playchannel-connecting">Подключение<br/><img src="images/loading.gif" alt="load" align="middle"/></div>-->
+        <div id="layer-playchannel">
+            <div id="playchannel-num"></div>
+            <div id="playchannel-info-clock"></div>
+            <div id="playchannel-info">
+                <div id="playchannel-info-wrapper">
+                    <div id="playchannel-info-name"></div>
+                    <div id="playchannel-info-category"></div>
+                    <div id="playchannel-info-programm">
+                        <b>Сейчас:</b> --:-- Нет информации<br/>
+                        <b>Следующее:</b> --:-- Нет информации<br/>
+                    </div>
+                </div>
+                <div id="playchannel-info-tips">
+                    <img class="infotipsimg" align="middle" src="images/green.png" alt="btngrn" style="margin: 0px 0px 35px 0px" /><span style="color:#00DD00">&nbsp;Анонс&nbsp;&nbsp;</span>
+                    <img class="infotipsimg" align="middle" src="images/yellow.png" alt="btnyel" style="margin: 0px 0px 35px 0px" /><span style="color:#DDDD00">&nbsp;ТВ Каналы&nbsp;&nbsp;</span>
+                    <img class="infotipsimg" align="middle" src="images/blue.png" alt="btnyel" style="margin: 0px 0px 35px 0px" /><span style="color:#026DD1">&nbsp;Меню</span>
+                </div>
+            </div>
+        </div>
+        <div id="layer-channelmenu">
+            <div id="channelmenu-clock"></div>
+            <div id="channelmenu-name">Список телеканалов</div>
+            <div id="channelmenu-list"></div>
+	    <div id="channelmenu-pig">
+                <!--<div id="channelmenu-connecting">Подключение<img src="images/loading.gif" width="60" height="60" alt="load" /></div>-->
+            </div>
+         
+           
+            <div id="channelmenu-program"></div>
+            <div id="channelmenu-info-tips">
+                <img align="middle" src="images/red.png" alt="btnred" /><span style="color:#DD0000">&nbsp;Изб&nbsp;</span>
+                <img align="middle" src="images/green.png" alt="btngrn" /><span style="color:#00DD00">&nbsp;Доб&nbsp;</span>
+                <img align="middle" src="images/yellow.png" alt="btnyel" /><span style="color:#DDDD00">&nbsp;Вых&nbsp;&nbsp;</span>
+            </div>
+        </div>
+        <div id="layer-channelannounce">
+            <div id="channelannounce-name"></div>
+            <div id="channelannounce-list"></div>
+        </div>
+        <div id="layer-usermenu" >
+            <div id="usermenu-clock">00:00</div>
+            <div id="usermenu-menu">
+                <div id="usermenu-menu-wrapper" >
+                    <div class="usermenu-category" style="background-image: url(images/channel_programm_background.png)"><img align="middle" src="images/usermenu/personal.png" alt="personal" width="43" height="58" /></div>
+                    <div class="usermenu-category"><img align="middle" src="images/usermenu/weather.png" alt="weather" width="74" height="76" /></div>
+                    <div class="usermenu-category"><img align="middle" src="images/usermenu/currency.png" alt="currency" width="90" height="54" /></div>
+                    <div class="usermenu-category"><img align="middle" src="images/usermenu/news.png" alt="news" width="58" height="55" /></div>
+                    <div class="usermenu-category"><img align="middle" src="images/usermenu/help.png" alt="help" width="58" height="62  " /></div>
+               
+                </div>
+                <div id="usermenu-category-name">Персональные данные</div>
+            </div>
+            <div class="usermenu-item">
+                <div class ="usermenu-content">
+                    <div id="usermenu-item-userinfo">
+                    </div>
+                </div>
+            </div>
+            <div class="usermenu-item">
+                <div class ="usermenu-content">
+                    <div id="usermenu-item-weather">
+                    </div>
+                </div>
+            </div>
+            <div class="usermenu-item">
+                <div class ="usermenu-content">
+                    <div id="usermenu-item-currency">
+                    </div>
+                </div>
+            </div>
+            <div class="usermenu-item">
+                <div class ="usermenu-content">
+                    <div id="usermenu-item-news">
+                    </div>
+                </div>
+            </div>
+            <div class="usermenu-item">
+                <div class ="usermenu-content">
+                    <div id="usermenu-item-help">
+                    </div>
+                </div>
+            </div>
+            <div class="usermenu-item">
+                <div class ="usermenu-content">
+                    <div id="usermenu-item-info">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="volume-bar"><div></div>
+            <div id="volume-bar-num">100</div>
+        </div>
+        <div id="message-window">
+            <div id="message-header">Инфо</div>
+            <br/>
+            <div id="message-content"></div>
+            <div id="message-OK">Закрыть&nbsp;(OK)</div>
+        </div>
+        <div id="pin-window">
+            <div id="pin-header">Введите пароль</div>
+            <br/>
+            <div id="pin-content">
+        	<input type="password" value="" id="pinin" AUTOCOMPLETE="OFF">
+            </div>
+            <div id="pin-invalid">
+            </div>
+            <div id="pin-OK">OK</div>
+        </div> 
+        <div id="minimessage-window"><div id="minimessage-content"></div></div>
+        <div id="error-window">
+            <div id="error-header">Сбой в работе</div>
+            <br/>
+            <div id="error-content"></div>
+            <div id="error-OK">Закрыть&nbsp;(OK)</div>
+        </div> 
+
+       
+	<FORM action="index.cgi" method="GET" name="main_form" id="main_form">
+	    <input type=hidden name="action" value="showmain" id="action">
+        
+	</FORM>
+	
+	</body>
+	
+	<script type="text/javascript">
+	
+var Main = {
+} // Объект Main
+
+var tvKey = new Common.API.TVKeyValue();
+var widgetAPI = new Common.API.Widget();
+var pluginObj = new Common.API.Plugin();
+var networkObj = new Network();
+
+Main.onLoad = function(){ // Создание объекта общего модуля
+// вызывается по событию onload тэга <body>
+alert("Main.onLoad()");
+widgetAPI.sendReadyEvent();
+// Сообщение Менеджеру приложений о готовности
+document.getElementById("anchor").focus();// Помещение фокуса на элемент
+/**
+* JavaScript code Here!
+*/
+}
+/*Main.keyDown = function(){
+var keyCode = event.keyCode;
+alert("Main Key code : " + keyCode);
+// Обработчик нажатия кнопки
+switch (keyCode) {
+case tvKey.KEY_LEFT:
+stb.SelectPrevUserMenuItem()
+alert("left");
+//document.getElementById("welcome").innerHTML = "Nice to meet you.";
+/**
+* Code for Left key event!
+*/
+/*break;
+case tvKey.KEY_RIGHT:
+alert("right");
+stb.SelectNextUserMenuItem();
+//document.getElementById("welcome").innerHTML = "I'm so happy.";
+break;
+case tvKey.KEY_UP:
+alert("up");
+stb.previewNextCh();
+//document.getElementById("welcome").innerHTML = "I Love you.";
+break;
+case tvKey.KEY_DOWN:
+alert("down");
+stb.previewPrevCh();
+//document.getElementById("welcome").innerHTML = "Good job.";
+break;
+case tvKey.KEY_ENTER:
+alert("enter");
+break;
+case tvKey.KEY_RETURN:
+break;
+}
+}
+
+ */
+
+	alert('begin');
+
+	/*try {
+    	widgetAPI = new Common.API.Widget();
+       	pluginObj = new Common.API.Plugin();
+     	networkObj = new Network();
+     	tvKey = new Common.API.TVKeyValue();
+    	  
+	}
+	catch (e) {
+		alert('maincatch' + e.message);
+	}*/
+    //widgetAPI.sendReadyEvent();
+
+	var stb;
+    	var remoteControl = new STB_Remote();
+	// Authentication
+
+	alert('begin2');
+
+	var videolayerfullwidth=1280;
+	var videolayerfullheight=720;
+	var videolayerfullbasex=0;
+	var videolayerfullbasey=0;
+	var previeww=480;
+	var previewh=110;
+	var previewx=480;
+	var previewy=260;
+	//alert('1360');
+	
+    //window.resizeTo(1280,720);
+    //window.moveTo(videolayerfullbasex,videolayerfullbasey);
+	alert('begin3');
+    alert('width ' + screen.width);
+    alert ('height ' + screen.height);
+	var mac;
+    	var idiptv;
+    	var clock;
+    	var parentpin;
+       	var SessionVal=16921469;
+    	try
+    	{
+    		alert('begin4');
+
+    	    mac =  networkObj.getMac();
+    	    alert('mac ' + mac);
+    	    clock = new Clock();
+    	    $.ajax({
+	        url:       "http://79.171.120.14/cgi-bind/index.cgi", //playlist
+	        cache:     false,
+	        type:	   'POST',
+	        dataType:  "text",
+	        data:      { action: 'MacAuthentication', authmac: mac},
+	        success:   function(result) {
+	        	alert('begin5.45 ' + mac + result);	
+	       	    if(result == ''){
+	    		  MessageBox.Show("Ошибка соединения",result, MBType.ERROR);
+	    		   alert('begin5.2');
+	    		   alert('begin5.3');
+	    		   return   	 
+	       		}
+	       	    var responce = eval(result);
+	    		if(responce[0] !=''){
+	    		  MessageBox.Show("Ошибка авторизации",responce[0], MBType.ERROR);
+	    		   alert('begin5.1');
+	    		   return   	 
+	       		}
+
+				
+	    		alert('begin6');
+	    		idiptv = responce[1];
+			var id = responce[2];
+			var name = responce[3];
+			var balance = responce[4];
+			var ip = responce[5];
+			var packetlist = responce[6];
+	    	alert('begin7');
+			if(id == '' || name == '' || balance == '' || ip == '' || packetlist == ''){
+	    		    MessageBox.Show("Ошибка авторизации", "Получены некорректные данные.", MBType.ERROR);
+	    		    alert('begin7.1');
+			    return;
+			}
+			alert('begin7.2');
+			var channels=responce[7];
+			alert('channelsize ' + channels.length);
+			if(!channels.length){
+			    MessageBox.Show("Ошибка инициализации", "Список каналов пуст!", MBType.ERROR);
+			    alert('begin6.1');
+			    return;
+			}
+    			
+    			parentpin=responce[8];
+    			
+    			$('#usermenu-item-userinfo').html('<table class="itemuserinfofont" width="100%" style="color:inherit" cellpadding="10px">'+
+    			    '<tr class="channelmenu-item-usermenu"><td nowrap align="right">Абонент: </td><td>' + name +'</td></tr>'+
+                	    '<tr class="channelmenu-item-usermenu"><td nowrap align="right">Лиц. счет: </td><td>' + id +'</td></tr>'+
+                	    '<tr class="channelmenu-item-usermenu"><td nowrap align="right">Пакет ТВ: </td><td>' + packetlist + '</td></tr>'+
+                	    '<tr class="channelmenu-item-usermenu"><td nowrap align="right">IP: </td><td>' + ip + '</td></tr>'+
+                	    '<tr class="channelmenu-item-usermenu"><td nowrap align="right">MAC: </td><td>' + mac + '</td></tr>'+
+                	    '<tr class="channelmenu-item-usermenu"><td nowrap align="right">Баланс: </td><td>' + balance + ' грн.</td></tr></table> ');
+			
+			try
+            		{
+	                    var startChannel = 0;    		          
+    		            alert('begin20');               
+            		    stb = new STB(channels, startChannel);
+            		    
+            		    alert('begin16');
+	                    remoteControl.setSTB(stb);
+	                    alert('begin17');     
+    		            startChannel = parseInt(startChannel, 10);
+    		            alert('begin18');
+	                    //stb.Play(startChannel);
+	                    alert('begin15');
+	            	    stb.PlaySelectedCH(startChannel);
+                        //stb.PlaySelectedCH(10);
+
+	                }
+        		catch(e){
+        		alert('begin19 ' + e.message);	
+        		 MessageBox.Show("Ошибка инициализации", e.message, MBType.ERROR);
+        		}
+	        	alert('begin21');
+	        },
+			error:   function(result) {
+				alert('begin7.1');
+				
+	    	    MessageBox.Show("Ошибка авторизации", result, MBType.ERROR);
+
+	        }
+	    });
+	    
+    	alert ('begin8');    
+    	    
+    	}
+    	catch(e)
+    	{
+    	    MessageBox.Show("Сбой первичной проверки", e.message, MBType.ERROR);
+    	}
+	
+
+        </script>
+</html>
